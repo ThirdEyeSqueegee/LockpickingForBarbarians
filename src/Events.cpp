@@ -40,12 +40,12 @@ namespace Events {
                                 const auto two_handed = two_handed_av / two_handed_pct;
 
                                 if (Settings::use_stamina && Settings::use_2h) {
-                                    if (stamina >= 100.0f && two_handed >= 15.0f
+                                    if (stamina >= 100.0f && two_handed >= 20.0f
                                         && level == RE::LOCK_LEVEL::kVeryEasy) {
                                         lock->SetLocked(false);
                                         player->AddSkillExperience(RE::ActorValue::kLockpicking, 17.5f);
                                     }
-                                    if (stamina > 125.0f && two_handed > 25.0f
+                                    if (stamina > 125.0f && two_handed > 30.0f
                                         && level == RE::LOCK_LEVEL::kEasy) {
                                         lock->SetLocked(false);
                                         player->AddSkillExperience(RE::ActorValue::kLockpicking, 25.0f);
@@ -68,11 +68,11 @@ namespace Events {
                                 }
 
                                 if (!Settings::use_stamina && Settings::use_2h) {
-                                    if (two_handed >= 15.0f && level == RE::LOCK_LEVEL::kVeryEasy) {
+                                    if (two_handed >= 20.0f && level == RE::LOCK_LEVEL::kVeryEasy) {
                                         lock->SetLocked(false);
                                         player->AddSkillExperience(RE::ActorValue::kLockpicking, 17.5f);
                                     }
-                                    if (two_handed > 25.0f && level == RE::LOCK_LEVEL::kEasy) {
+                                    if (two_handed > 30.0f && level == RE::LOCK_LEVEL::kEasy) {
                                         lock->SetLocked(false);
                                         player->AddSkillExperience(RE::ActorValue::kLockpicking, 25.0f);
                                     }
