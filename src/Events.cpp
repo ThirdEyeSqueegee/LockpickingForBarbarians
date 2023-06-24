@@ -26,18 +26,23 @@ namespace Events {
                             );
                             if (stamina > 100.0f && stamina <= 125.0f && level == RE::LOCK_LEVEL::kVeryEasy) {
                                 lock->SetLocked(false);
+                                player->AddSkillExperience(RE::ActorValue::kStamina, 17.5f);
                             }
                             if (stamina > 125.0f && stamina <= 175.0f && level == RE::LOCK_LEVEL::kEasy) {
                                 lock->SetLocked(false);
+                                player->AddSkillExperience(RE::ActorValue::kStamina, 25.0f);
                             }
                             if (stamina > 175.0f && stamina <= 225.0f && level == RE::LOCK_LEVEL::kAverage) {
                                 lock->SetLocked(false);
+                                player->AddSkillExperience(RE::ActorValue::kStamina, 40.0f);
                             }
                             if (stamina > 225.0f && stamina <= 275.0f && level == RE::LOCK_LEVEL::kHard) {
                                 lock->SetLocked(false);
+                                player->AddSkillExperience(RE::ActorValue::kStamina, 80.0f);
                             }
                             if (stamina >= 275 && level == RE::LOCK_LEVEL::kVeryHard) {
                                 lock->SetLocked(false);
+                                player->AddSkillExperience(RE::ActorValue::kStamina, 120.0f);
                             }
                         }
                     }
