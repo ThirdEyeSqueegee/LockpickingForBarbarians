@@ -18,5 +18,8 @@ void Settings::LoadSettings() {
     use_stamina = ini.GetValue("General", "bUseStamina");
     use_2h = ini.GetValue("General", "bUse2H");
 
+    if (RE::TESDataHandler::GetSingleton()->LookupLoadedModByName("HandtoHand.esp"sv) != nullptr)
+        h2h_present = true;
+
     logger::info("Loaded settings");
 }

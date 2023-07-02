@@ -16,4 +16,5 @@ public:
 
     inline static bool use_stamina = true;
     inline static bool use_2h = true;
+    inline static bool h2h_present = false;
 };
