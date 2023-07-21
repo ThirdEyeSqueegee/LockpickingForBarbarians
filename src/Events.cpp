@@ -43,78 +43,116 @@ namespace Events {
                                                                         ? RE::ActorValue::kPickpocket
                                                                         : RE::ActorValue::kLockpicking;
 
+                                        auto cond1 = false, cond2 = false, cond3 = false, cond4 = false, cond5 = false;
+
                                         if (Settings::use_stamina && Settings::use_2h) {
-                                            if (stamina >= 100.0f && two_handed >= 20.0f
-                                                && level == RE::LOCK_LEVEL::kVeryEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 17.5f);
-                                            }
-                                            if (stamina > 125.0f && two_handed > 30.0f
-                                                && level == RE::LOCK_LEVEL::kEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 25.0f);
-                                            }
-                                            if (stamina > 175.0f && two_handed > 40.0f
-                                                && level == RE::LOCK_LEVEL::kAverage) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 40.0f);
-                                            }
-                                            if (stamina > 225.0f && two_handed > 60.0f
-                                                && level == RE::LOCK_LEVEL::kHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 80.0f);
-                                            }
-                                            if (stamina >= 275.0f && two_handed >= 80.0f
-                                                && level == RE::LOCK_LEVEL::kVeryHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 120.0f);
-                                            }
+                                            cond1 = stamina >= 100.0f && two_handed >= 20.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryEasy;
+                                            cond2 = stamina > 125.0f && two_handed > 30.0f
+                                                    && level == RE::LOCK_LEVEL::kEasy;
+                                            cond3 = stamina > 175.0f && two_handed > 40.0f
+                                                    && level == RE::LOCK_LEVEL::kAverage;
+                                            cond4 = stamina > 225.0f && two_handed > 60.0f
+                                                    && level == RE::LOCK_LEVEL::kHard;
+                                            cond5 = stamina >= 275.0f && two_handed >= 80.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryHard;
                                         }
 
                                         if (!Settings::use_stamina && Settings::use_2h) {
-                                            if (two_handed >= 20.0f && level == RE::LOCK_LEVEL::kVeryEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 17.5f);
-                                            }
-                                            if (two_handed > 30.0f && level == RE::LOCK_LEVEL::kEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 25.0f);
-                                            }
-                                            if (two_handed > 40.0f && level == RE::LOCK_LEVEL::kAverage) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 40.0f);
-                                            }
-                                            if (two_handed > 60.0f && level == RE::LOCK_LEVEL::kHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 80.0f);
-                                            }
-                                            if (two_handed >= 80.0f && level == RE::LOCK_LEVEL::kVeryHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 120.0f);
-                                            }
+                                            cond1 = two_handed >= 20.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryEasy;
+                                            cond2 = two_handed > 30.0f
+                                                    && level == RE::LOCK_LEVEL::kEasy;
+                                            cond3 = two_handed > 40.0f
+                                                    && level == RE::LOCK_LEVEL::kAverage;
+                                            cond4 = two_handed > 60.0f
+                                                    && level == RE::LOCK_LEVEL::kHard;
+                                            cond5 = two_handed >= 80.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryHard;
                                         }
 
                                         if (Settings::use_stamina && !Settings::use_2h) {
-                                            if (stamina >= 100.0f && level == RE::LOCK_LEVEL::kVeryEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 17.5f);
-                                            }
-                                            if (stamina > 125.0f && level == RE::LOCK_LEVEL::kEasy) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 25.0f);
-                                            }
-                                            if (stamina > 175.0f && level == RE::LOCK_LEVEL::kAverage) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 40.0f);
-                                            }
-                                            if (stamina > 225.0f && level == RE::LOCK_LEVEL::kHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 80.0f);
-                                            }
-                                            if (stamina >= 275.0f && level == RE::LOCK_LEVEL::kVeryHard) {
-                                                lock->SetLocked(false);
-                                                player->AddSkillExperience(av_to_increase, 120.0f);
-                                            }
+                                            cond1 = stamina >= 100.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryEasy;
+                                            cond2 = stamina > 125.0f
+                                                    && level == RE::LOCK_LEVEL::kEasy;
+                                            cond3 = stamina > 175.0f
+                                                    && level == RE::LOCK_LEVEL::kAverage;
+                                            cond4 = stamina > 225.0f
+                                                    && level == RE::LOCK_LEVEL::kHard;
+                                            cond5 = stamina >= 275.0f
+                                                    && level == RE::LOCK_LEVEL::kVeryHard;
+                                        }
+
+                                        if (cond1) {
+                                            lock->SetLocked(false);
+                                            Hooks::FinalizeUnlock(locked->AsReference());
+                                            player->UpdateCrosshairs();
+                                            RE::PlaySound("UILockpickingUnlock");
+                                            if (locked->IsCrimeToActivate())
+                                                player->StealAlarm(locked->AsReference(),
+                                                                   locked->As<RE::TESForm>(),
+                                                                   0,
+                                                                   100,
+                                                                   locked->GetOwner(),
+                                                                   false);
+                                            player->AddSkillExperience(av_to_increase, 17.5f);
+                                        }
+                                        if (cond2) {
+                                            lock->SetLocked(false);
+                                            Hooks::FinalizeUnlock(locked->AsReference());
+                                            player->UpdateCrosshairs();
+                                            RE::PlaySound("UILockpickingUnlock");
+                                            if (locked->IsCrimeToActivate())
+                                                player->StealAlarm(locked->AsReference(),
+                                                                   locked->As<RE::TESForm>(),
+                                                                   0,
+                                                                   200,
+                                                                   locked->GetOwner(),
+                                                                   false);
+                                            player->AddSkillExperience(av_to_increase, 25.0f);
+                                        }
+                                        if (cond3) {
+                                            lock->SetLocked(false);
+                                            Hooks::FinalizeUnlock(locked->AsReference());
+                                            player->UpdateCrosshairs();
+                                            RE::PlaySound("UILockpickingUnlock");
+                                            if (locked->IsCrimeToActivate())
+                                                player->StealAlarm(locked->AsReference(),
+                                                                   locked->As<RE::TESForm>(),
+                                                                   0,
+                                                                   400,
+                                                                   locked->GetOwner(),
+                                                                   false);
+                                            player->AddSkillExperience(av_to_increase, 40.0f);
+                                        }
+                                        if (cond4) {
+                                            lock->SetLocked(false);
+                                            Hooks::FinalizeUnlock(locked->AsReference());
+                                            player->UpdateCrosshairs();
+                                            RE::PlaySound("UILockpickingUnlock");
+                                            if (locked->IsCrimeToActivate())
+                                                player->StealAlarm(locked->AsReference(),
+                                                                   locked->As<RE::TESForm>(),
+                                                                   0,
+                                                                   800,
+                                                                   locked->GetOwner(),
+                                                                   false);
+                                            player->AddSkillExperience(av_to_increase, 80.0f);
+                                        }
+                                        if (cond5) {
+                                            lock->SetLocked(false);
+                                            Hooks::FinalizeUnlock(locked->AsReference());
+                                            player->UpdateCrosshairs();
+                                            RE::PlaySound("UILockpickingUnlock");
+                                            if (locked->IsCrimeToActivate())
+                                                player->StealAlarm(locked->AsReference(),
+                                                                   locked->As<RE::TESForm>(),
+                                                                   0,
+                                                                   1200,
+                                                                   locked->GetOwner(),
+                                                                   false);
+                                            player->AddSkillExperience(av_to_increase, 120.0f);
                                         }
                                     }
                                 }
