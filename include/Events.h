@@ -12,8 +12,7 @@ namespace Events {
         OnHitEventHandler& operator=(OnHitEventHandler&&) = delete;
 
         static OnHitEventHandler* GetSingleton();
-        RE::BSEventNotifyControl ProcessEvent(const RE::TESHitEvent* a_event,
-                                              RE::BSTEventSource<RE::TESHitEvent>* a_eventSource) override;
+        RE::BSEventNotifyControl ProcessEvent(const RE::TESHitEvent* a_event, RE::BSTEventSource<RE::TESHitEvent>* a_eventSource) override;
         static void Register();
     };
 }
