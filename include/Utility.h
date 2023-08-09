@@ -18,11 +18,16 @@ public:
 
     inline static RE::TESConditionItem cond_item;
     inline static RE::TESCondition is_power_attacking;
+    inline static RE::ActorValue av_to_use;
 
     static void InitUtility() {
         cond_item.data.comparisonValue.f = 1.0f;
         cond_item.data.functionData.function = RE::FUNCTION_DATA::FunctionID::kIsPowerAttacking;
 
         is_power_attacking.head = &cond_item;
+        logger::debug("Initialized power attack condition");
+
+        av_to_use = Settings::h2h_present ? RE::ActorValue::kPickpocket : RE::ActorValue::kLockpicking;
+        logger::debug("Initialized actor value");
     }
 };

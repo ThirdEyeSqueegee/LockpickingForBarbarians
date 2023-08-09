@@ -26,7 +26,6 @@ namespace Events {
                                     const auto lock = locked->GetLock();
                                     const auto level = lock->GetLockLevel(locked);
                                     logger::debug("Lock level: {}", static_cast<int>(level));
-
                                     const auto stamina_av = player->AsActorValueOwner()->GetActorValue(RE::ActorValue::kStamina);
                                     const auto two_handed_av = player->AsActorValueOwner()->GetActorValue(RE::ActorValue::kTwoHanded);
                                     const auto stamina_pct = Hooks::GetActorValuePercent(player->As<RE::Actor>(), RE::ActorValue::kStamina);
@@ -35,94 +34,36 @@ namespace Events {
                                     const auto two_handed = two_handed_av / two_handed_pct;
                                     logger::debug("Current player stamina: {}", stamina);
                                     logger::debug("Current player two-handed: {}", two_handed);
-
-                                    const auto av_to_increase = Settings::h2h_present ? RE::ActorValue::kPickpocket : RE::ActorValue::kLockpicking;
                                     auto cond1 = false, cond2 = false, cond3 = false, cond4 = false, cond5 = false;
                                     if (Settings::use_stamina && Settings::use_2h) {
                                         cond1 = stamina >= 100.0f && two_handed >= 20.0f && level == RE::LOCK_LEVEL::kVeryEasy;
-                                        cond2 = stamina > 125.0f && two_handed > 30.0f && level == RE::LOCK_LEVEL::kEasy;
-                                        cond3 = stamina > 175.0f && two_handed > 40.0f && level == RE::LOCK_LEVEL::kAverage;
-                                        cond4 = stamina > 225.0f && two_handed > 60.0f && level == RE::LOCK_LEVEL::kHard;
+                                        cond2 = stamina >= 125.0f && two_handed >= 30.0f && level == RE::LOCK_LEVEL::kEasy;
+                                        cond3 = stamina >= 175.0f && two_handed >= 40.0f && level == RE::LOCK_LEVEL::kAverage;
+                                        cond4 = stamina >= 225.0f && two_handed >= 60.0f && level == RE::LOCK_LEVEL::kHard;
                                         cond5 = stamina >= 275.0f && two_handed >= 80.0f && level == RE::LOCK_LEVEL::kVeryHard;
                                     } else if (!Settings::use_stamina && Settings::use_2h) {
                                         cond1 = two_handed >= 20.0f && level == RE::LOCK_LEVEL::kVeryEasy;
-                                        cond2 = two_handed > 30.0f && level == RE::LOCK_LEVEL::kEasy;
-                                        cond3 = two_handed > 40.0f && level == RE::LOCK_LEVEL::kAverage;
-                                        cond4 = two_handed > 60.0f && level == RE::LOCK_LEVEL::kHard;
+                                        cond2 = two_handed >= 30.0f && level == RE::LOCK_LEVEL::kEasy;
+                                        cond3 = two_handed >= 40.0f && level == RE::LOCK_LEVEL::kAverage;
+                                        cond4 = two_handed >= 60.0f && level == RE::LOCK_LEVEL::kHard;
                                         cond5 = two_handed >= 80.0f && level == RE::LOCK_LEVEL::kVeryHard;
                                     } else if (Settings::use_stamina && !Settings::use_2h) {
                                         cond1 = stamina >= 100.0f && level == RE::LOCK_LEVEL::kVeryEasy;
-                                        cond2 = stamina > 125.0f && level == RE::LOCK_LEVEL::kEasy;
-                                        cond3 = stamina > 175.0f && level == RE::LOCK_LEVEL::kAverage;
-                                        cond4 = stamina > 225.0f && level == RE::LOCK_LEVEL::kHard;
+                                        cond2 = stamina >= 125.0f && level == RE::LOCK_LEVEL::kEasy;
+                                        cond3 = stamina >= 175.0f && level == RE::LOCK_LEVEL::kAverage;
+                                        cond4 = stamina >= 225.0f && level == RE::LOCK_LEVEL::kHard;
                                         cond5 = stamina >= 275.0f && level == RE::LOCK_LEVEL::kVeryHard;
                                     }
-                                    if (cond1) {
-                                        lock->SetLocked(false);
-                                        logger::debug("Unlocked {}", locked->GetName());
-                                        Hooks::FinalizeUnlock(locked->AsReference());
-                                        logger::debug("Finalized unlock for {}", locked->GetName());
-                                        player->UpdateCrosshairs();
-                                        RE::PlaySound("UILockpickingUnlock");
-                                        if (locked->IsCrimeToActivate()) {
-                                            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, 100, locked->GetOwner(), false);
-                                            logger::debug("Sent steal alarm");
-                                        }
-                                        player->AddSkillExperience(av_to_increase, 17.5f);
-                                        logger::debug("Added 17.5 XP");
-                                    } else if (cond2) {
-                                        lock->SetLocked(false);
-                                        logger::debug("Unlocked {}", locked->GetName());
-                                        Hooks::FinalizeUnlock(locked->AsReference());
-                                        logger::debug("Finalized unlock for {}", locked->GetName());
-                                        player->UpdateCrosshairs();
-                                        RE::PlaySound("UILockpickingUnlock");
-                                        if (locked->IsCrimeToActivate()) {
-                                            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, 200, locked->GetOwner(), false);
-                                            logger::debug("Sent steal alarm");
-                                        }
-                                        player->AddSkillExperience(av_to_increase, 25.0f);
-                                        logger::debug("Added 25 XP");
-                                    } else if (cond3) {
-                                        lock->SetLocked(false);
-                                        logger::debug("Unlocked {}", locked->GetName());
-                                        Hooks::FinalizeUnlock(locked->AsReference());
-                                        logger::debug("Finalized unlock for {}", locked->GetName());
-                                        player->UpdateCrosshairs();
-                                        RE::PlaySound("UILockpickingUnlock");
-                                        if (locked->IsCrimeToActivate()) {
-                                            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, 400, locked->GetOwner(), false);
-                                            logger::debug("Sent steal alarm");
-                                        }
-                                        player->AddSkillExperience(av_to_increase, 40.0f);
-                                        logger::debug("Added 40 XP");
-                                    } else if (cond4) {
-                                        lock->SetLocked(false);
-                                        logger::debug("Unlocked {}", locked->GetName());
-                                        Hooks::FinalizeUnlock(locked->AsReference());
-                                        logger::debug("Finalized unlock for {}", locked->GetName());
-                                        player->UpdateCrosshairs();
-                                        RE::PlaySound("UILockpickingUnlock");
-                                        if (locked->IsCrimeToActivate()) {
-                                            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, 800, locked->GetOwner(), false);
-                                            logger::debug("Sent steal alarm");
-                                        }
-                                        player->AddSkillExperience(av_to_increase, 80.0f);
-                                        logger::debug("Added 80 XP");
-                                    } else if (cond5) {
-                                        lock->SetLocked(false);
-                                        logger::debug("Unlocked {}", locked->GetName());
-                                        Hooks::FinalizeUnlock(locked->AsReference());
-                                        logger::debug("Finalized unlock for {}", locked->GetName());
-                                        player->UpdateCrosshairs();
-                                        RE::PlaySound("UILockpickingUnlock");
-                                        if (locked->IsCrimeToActivate()) {
-                                            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, 1200, locked->GetOwner(), false);
-                                            logger::debug("Sent steal alarm");
-                                        }
-                                        player->AddSkillExperience(av_to_increase, 120.0f);
-                                        logger::debug("Added 120 XP");
-                                    }
+                                    if (cond1)
+                                        ProcessHit(lock, locked, 100, 17.5f);
+                                    else if (cond2)
+                                        ProcessHit(lock, locked, 200, 25.0f);
+                                    else if (cond3)
+                                        ProcessHit(lock, locked, 400, 40.0f);
+                                    else if (cond4)
+                                        ProcessHit(lock, locked, 800, 80.0f);
+                                    else if (cond5)
+                                        ProcessHit(lock, locked, 1200, 120.0f);
                                 }
                             }
                         }
@@ -138,5 +79,21 @@ namespace Events {
         const auto holder = RE::ScriptEventSourceHolder::GetSingleton();
         holder->AddEventSink(GetSingleton());
         logger::info("Registered hit event handler");
+    }
+
+    void OnHitEventHandler::ProcessHit(RE::REFR_LOCK* lock, RE::TESObjectREFR* locked, int alarm_value, float xp_gain) {
+        lock->SetLocked(false);
+        logger::debug("Unlocked {}", locked->GetName());
+        Hooks::FinalizeUnlock(locked->AsReference());
+        logger::debug("Finalized unlock for {}", locked->GetName());
+        const auto player = RE::PlayerCharacter::GetSingleton();
+        player->UpdateCrosshairs();
+        RE::PlaySound("UILockpickingUnlock");
+        if (locked->IsCrimeToActivate()) {
+            player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, alarm_value, locked->GetOwner(), false);
+            logger::debug("Sent steal alarm ({} gold)", alarm_value);
+        }
+        player->AddSkillExperience(Utility::av_to_use, xp_gain);
+        logger::debug("Added {} XP", xp_gain);
     }
 }
