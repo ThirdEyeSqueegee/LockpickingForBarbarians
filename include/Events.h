@@ -4,6 +4,7 @@ namespace Events {
     class OnHitEventHandler : public RE::BSTEventSink<RE::TESHitEvent> {
     protected:
         OnHitEventHandler() = default;
+        ~OnHitEventHandler() override = default;
 
     public:
         OnHitEventHandler(const OnHitEventHandler&) = delete;

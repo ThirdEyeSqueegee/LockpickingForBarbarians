@@ -25,6 +25,11 @@ void Settings::LoadSettings() {
     use_stamina = ini.GetBoolValue("General", "bUseStamina");
     use_2h = ini.GetBoolValue("General", "bUse2H");
 
+    if (!use_stamina && !use_2h) {
+        logger::error("ERROR: At least one of bUseStamina and bUse2H must be set to true in LockpickingForBarbarians.ini.");
+        SKSE::stl::report_and_fail("Error while loading settings for Lockpicking for Barbarians. See LockpickingForBarbarians.log for details.");
+    }
+
     if (RE::TESDataHandler::GetSingleton()->LookupLoadedModByName("HandtoHand.esp"sv))
         h2h_present = true;
 
