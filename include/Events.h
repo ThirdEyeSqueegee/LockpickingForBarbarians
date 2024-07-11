@@ -1,23 +1,12 @@
 #pragma once
 
-namespace Events {
-    class OnHitEventHandler : public RE::BSTEventSink<RE::TESHitEvent> {
-    protected:
-        OnHitEventHandler() = default;
-        ~OnHitEventHandler() override = default;
-
+namespace Events
+{
+    class OnHitEventHandler : public EventSingleton<OnHitEventHandler, RE::TESHitEvent>
+    {
     public:
-        OnHitEventHandler(const OnHitEventHandler&) = delete;
-        OnHitEventHandler(OnHitEventHandler&&) = delete;
-        OnHitEventHandler& operator=(const OnHitEventHandler&) = delete;
-        OnHitEventHandler& operator=(OnHitEventHandler&&) = delete;
+        RE::BSEventNotifyControl ProcessEvent(const RE::TESHitEvent* a_event, RE::BSTEventSource<RE::TESHitEvent>* a_eventSource) noexcept override;
 
-        static OnHitEventHandler* GetSingleton();
-
-        RE::BSEventNotifyControl ProcessEvent(const RE::TESHitEvent* a_event, RE::BSTEventSource<RE::TESHitEvent>* a_eventSource) override;
-
-        static void Register();
-
-        static void ProcessHit(RE::REFR_LOCK* lock, RE::TESObjectREFR* locked, int alarm_value, float xp_gain);
+        static void ProcessHit(RE::REFR_LOCK* lock, RE::TESObjectREFR* locked, int alarm_value, float xp_gain) noexcept;
     };
-}
+} // namespace Events

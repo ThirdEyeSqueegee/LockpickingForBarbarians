@@ -1,23 +1,15 @@
 #pragma once
 
-class Settings {
-protected:
-    Settings() = default;
-    ~Settings() = default;
-
+class Settings : public Singleton<Settings>
+{
 public:
-    Settings(const Settings&) = delete;
-    Settings(Settings&&) = delete;
-    Settings& operator=(const Settings&) = delete;
-    Settings& operator=(Settings&&) = delete;
+    static void LoadSettings() noexcept;
 
-    static Settings* GetSingleton();
+    inline static bool debug_logging{};
 
-    static void LoadSettings();
+    inline static bool use_stamina{};
 
-    inline static bool debug_logging = false;
+    inline static bool use_weapon_skill{};
 
-    inline static bool use_stamina = true;
-    inline static bool use_2h = true;
-    inline static bool h2h_present = false;
+    inline static bool h2h_present{};
 };
