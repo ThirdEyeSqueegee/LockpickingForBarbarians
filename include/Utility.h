@@ -11,7 +11,7 @@ public:
 
     inline static RE::TESObjectWEAP* unarmed_weapon{};
 
-    static void InitUtility()
+    static void InitUtility() noexcept
     {
         cond_item.data.comparisonValue.f     = 1.0f;
         cond_item.data.functionData.function = RE::FUNCTION_DATA::FunctionID::kIsPowerAttacking;

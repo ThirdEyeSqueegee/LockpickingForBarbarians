@@ -101,16 +101,21 @@ namespace Events
                                         cond5 = second_av >= 80.0f && level == very_hard;
                                     }
                                 }
-                                if (cond1)
+                                if (cond1) {
                                     ProcessHit(lock, locked, 100, 17.5f);
-                                else if (cond2)
+                                }
+                                else if (cond2) {
                                     ProcessHit(lock, locked, 200, 25.0f);
-                                else if (cond3)
+                                }
+                                else if (cond3) {
                                     ProcessHit(lock, locked, 400, 40.0f);
-                                else if (cond4)
+                                }
+                                else if (cond4) {
                                     ProcessHit(lock, locked, 800, 80.0f);
-                                else if (cond5)
+                                }
+                                else if (cond5) {
                                     ProcessHit(lock, locked, 1200, 120.0f);
+                                }
                             }
                         }
                     }
@@ -136,7 +141,9 @@ namespace Events
             player->StealAlarm(locked->AsReference(), locked->As<RE::TESForm>(), 0, alarm_value, locked->GetOwner(), false);
             logger::debug("Sent steal alarm ({} gold)", alarm_value);
         }
-        player->AddSkillExperience(Utility::av_to_use, xp_gain);
-        logger::debug("Added {} {} XP", xp_gain, Settings::h2h_present ? "Security" : "Lockpicking");
+        if (!Settings::no_xp_gain) {
+            player->AddSkillExperience(Utility::av_to_use, xp_gain);
+            logger::debug("Added {} {} XP", xp_gain, Settings::h2h_present ? "Security" : "Lockpicking");
+        }
     }
 } // namespace Events

@@ -11,5 +11,7 @@ public:
 
     inline static bool use_weapon_skill{};
 
+    inline static bool no_xp_gain{};
+
     inline static bool h2h_present{};
 };

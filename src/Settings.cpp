@@ -18,6 +18,7 @@ void Settings::LoadSettings() noexcept
 
     use_stamina      = ini.GetBoolValue("General", "bUseStamina");
     use_weapon_skill = ini.GetBoolValue("General", "bUseWeaponSkill");
+    no_xp_gain       = ini.GetBoolValue("General", "bNoXPGain");
 
     if (!use_stamina && !use_weapon_skill) {
         logger::error("ERROR: At least one of bUseStamina and bUseWeaponSkill must be set to true in LockpickingForBarbarians.ini.");
@@ -31,5 +32,6 @@ void Settings::LoadSettings() noexcept
     logger::info("Loaded settings");
     logger::info("\tbUseStamina = {}", use_stamina);
     logger::info("\tbUseWeaponSkill = {}", use_weapon_skill);
+    logger::info("\tbNoXPGain = {}", no_xp_gain);
     logger::info("");
 }
